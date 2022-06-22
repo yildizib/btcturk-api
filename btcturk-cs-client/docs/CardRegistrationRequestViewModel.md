@@ -1,0 +1,12 @@
+# IO.Swagger.Model.CardRegistrationRequestViewModel
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**AddressName** | **string** |  | 
+**Address** | **string** |  | 
+**CityId** | **long?** |  | 
+**DistrictId** | **long?** |  | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+

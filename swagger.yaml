@@ -1,0 +1,2705 @@
+openapi: 3.0.1
+info:
+  title: BtcTurk API 3.0
+  description: White label exchange API documentation.
+  contact:
+    name: BtcTrader Development Team
+    email: development@btctrader.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: '3.0'
+paths:
+  /api/v3/account/limits:
+    get:
+      tags:
+        - Account
+      summary: ''
+      parameters:
+        - name: currencySymbol
+          in: query
+          description: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAllLimitsModel'
+        '500':
+          description: Server Error
+        '403':
+          description: Forbidden
+  /api/v3/account/address:
+    put:
+      tags:
+        - Account
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/AccountAddressModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountAddressModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AccountAddressModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AccountAddressModel'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+  /api/v3/account/buy-sell-info:
+    get:
+      tags:
+        - Account
+      summary: ''
+      responses:
+        '200':
+          description: Success
+        '500':
+          description: Server Error
+  /api/v3/account/pdpa:
+    post:
+      tags:
+        - Account
+      summary: ''
+      parameters:
+        - name: value
+          in: query
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+  /api/v3/account/features:
+    get:
+      tags:
+        - Account
+      responses:
+        '200':
+          description: Success
+        '500':
+          description: Server Error
+  /api/v3/account/trade-fee-rates:
+    get:
+      tags:
+        - Account
+      summary: ''
+      parameters:
+        - name: orderMethod
+          in: query
+          schema:
+            $ref: '#/components/schemas/OrderMethod'
+        - name: pairSymbol
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTradeFeeRateOutputModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTradeFeeRateErrorModel'
+        '404':
+          description: Not Found
+  /api/v3/account/splash-screen-login:
+    post:
+      tags:
+        - Account
+      summary: ''
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CreateSplashScreenLoginRequestModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSplashScreenLoginRequestModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateSplashScreenLoginRequestModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateSplashScreenLoginRequestModel'
+      responses:
+        '202':
+          description: Success
+  /api/v3/alarm:
+    post:
+      tags:
+        - Alarm
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CreateAlarmRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAlarmRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateAlarmRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateAlarmRequest'
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Alarm
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+          text/json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+          application/*+json:
+            schema:
+              type: array
+              items:
+                type: integer
+                format: int64
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - Alarm
+      parameters:
+        - name: isCompleted
+          in: query
+          schema:
+            type: boolean
+        - name: type
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/v3/alarm/{id}':
+    delete:
+      tags:
+        - Alarm
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/v3/bug-bounties/hall-of-fame:
+    get:
+      tags:
+        - BugBounty
+      summary: ''
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HallOfFrameResponseModel'
+  /api/v3/bug-bounties:
+    post:
+      tags:
+        - BugBounty
+      summary: ''
+      parameters:
+        - name: x-client-id
+          in: header
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/BugBountyNoticeRequestModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BugBountyNoticeRequestModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BugBountyNoticeRequestModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BugBountyNoticeRequestModel'
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReturnModel'
+  /api/v3/card-registration:
+    get:
+      tags:
+        - CardRegistration
+      summary: ''
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+        - CardRegistration
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CardRegistrationRequestViewModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardRegistrationRequestViewModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CardRegistrationRequestViewModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CardRegistrationRequestViewModel'
+      responses:
+        '200':
+          description: Success
+  '/api/v3/deposits/crypto/{currencySymbol}':
+    get:
+      tags:
+        - CryptoDeposit
+      summary: ''
+      parameters:
+        - name: currencySymbol
+          in: path
+          description: ''
+          required: true
+          schema:
+            $ref: '#/components/schemas/CryptoCurrencySymbol'
+        - name: autoAddressDisabled
+          in: query
+          description: ''
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Success
+  '/api/v3/deposits/crypto/getnewcryptoaddress/{currencySymbol}/{address}':
+    get:
+      tags:
+        - CryptoDeposit
+      summary: ''
+      parameters:
+        - name: currencySymbol
+          in: path
+          description: ''
+          required: true
+          schema:
+            $ref: '#/components/schemas/CryptoCurrencySymbol'
+        - name: address
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  '/api/v3/withdrawals/crypto/validation/{code}':
+    get:
+      tags:
+        - CryptoWithdraw
+      summary: ''
+      parameters:
+        - name: code
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoWithdrawValidationResponseModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoWithdrawValidationResponseModel'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoWithdrawValidationResponseModel'
+  '/api/v3/withdrawals/crypto/confirm/{code}':
+    get:
+      tags:
+        - CryptoWithdraw
+      summary: ''
+      parameters:
+        - name: code
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoWithdrawValidationResponseModel'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoWithdrawValidationResponseModel'
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - CryptoWithdraw
+      summary: ''
+      parameters:
+        - name: code
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoWithdrawValidationResponseModel'
+        '404':
+          description: Not Found
+  /api/v3/withdrawals/crypto/confirm:
+    post:
+      tags:
+        - CryptoWithdraw
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CryptoWithdrawalDeleteInputModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CryptoWithdrawalDeleteInputModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CryptoWithdrawalDeleteInputModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CryptoWithdrawalDeleteInputModel'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoWithdrawValidationResponseModel'
+        '404':
+          description: Not Found
+  /api/v3/crypto/withdrawal/commissions:
+    get:
+      tags:
+        - CryptoWithdrawalCommissions
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CryptoWithdrawalCommissionsResponseModel'
+  /api/v3/exchange/limits:
+    get:
+      tags:
+        - Exchange
+      summary: ''
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LimitOutputModel'
+        '500':
+          description: Server Error
+  /api/v3/exchange/commissions:
+    get:
+      tags:
+        - Exchange
+      summary: ''
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommissionOutputModel'
+  /api/v3/feedback/app-rating:
+    post:
+      tags:
+        - Feedback
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/AppRatingRequestModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppRatingRequestModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AppRatingRequestModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AppRatingRequestModel'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseModel'
+  /api/v3/feedback/support-platforms:
+    get:
+      tags:
+        - Feedback
+      summary: ''
+      responses:
+        '200':
+          description: Success
+  /api/v3/deposits/fiat/bank:
+    get:
+      tags:
+        - FiatDeposit
+      parameters:
+        - name: currencySymbol
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FiatDepositBankAccountModel'
+        '404':
+          description: Not Found
+  '/api/v3/deposits/fiat/bank/{slug}':
+    get:
+      tags:
+        - FiatDeposit
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: currencySymbol
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FiatDepositBankAccountModel'
+        '404':
+          description: Not Found
+  '/api/v3/deposits/fiat/bank/send-sms/{slug}':
+    get:
+      tags:
+        - FiatDeposit
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: currencySymbol
+          in: query
+          schema:
+            type: string
+      responses:
+        '403':
+          description: Forbidden
+        '204':
+          description: Success
+        '200':
+          description: Success
+        '500':
+          description: Server Error
+  /api/v3/fiat-withdrawal-commissions:
+    get:
+      tags:
+        - FiatWithdrawalCommissions
+      responses:
+        '200':
+          description: Success
+  /api/v3/halving:
+    get:
+      tags:
+        - Halving
+      summary: ''
+      responses:
+        '200':
+          description: Success
+  /api/v3/help/buy-sell-commissions:
+    get:
+      tags:
+        - Help
+      summary: ''
+      responses:
+        '200':
+          description: Success
+  '/api/resources/{language}.json':
+    get:
+      tags:
+        - Home
+      summary: ''
+      parameters:
+        - name: language
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: brokerId
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+  /api/resources/language:
+    get:
+      tags:
+        - Home
+      summary: ''
+      responses:
+        '200':
+          description: Success
+  /api/resources/location:
+    get:
+      tags:
+        - Home
+      summary: ''
+      responses:
+        '200':
+          description: Success
+  /api/v3/account/kyc:
+    post:
+      tags:
+        - KnowYourCustomer
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/JumioKycIdentityVerificationRequestModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JumioKycIdentityVerificationRequestModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/JumioKycIdentityVerificationRequestModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/JumioKycIdentityVerificationRequestModel'
+      responses:
+        '200':
+          description: Success
+  /api/v3/mobile/init:
+    get:
+      tags:
+        - Mobile
+      summary: ''
+      parameters:
+        - name: brokerId
+          in: query
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MobileSettingModel'
+  /api/v3/notifications:
+    get:
+      tags:
+        - Notification
+      summary: ''
+      parameters:
+        - name: PageIndex
+          in: query
+          schema:
+            maximum: 2147483647
+            minimum: 0
+            type: integer
+            format: int32
+        - name: PageSize
+          in: query
+          schema:
+            maximum: 40
+            minimum: 1
+            type: integer
+            format: int32
+        - name: Read
+          in: query
+          schema:
+            type: boolean
+        - name: ModuleId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: Type
+          in: query
+          schema:
+            $ref: '#/components/schemas/SystemNotificationRequestType'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemNotificationModelIPagedList'
+        '400':
+          description: Bad Request
+  /api/v3/notifications/count:
+    get:
+      tags:
+        - Notification
+      summary: "Notification summary.\r\nUnread, read, total"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SystemNotificationCountModel'
+  /api/v3/notifications/unread:
+    get:
+      tags:
+        - Notification
+      summary: ''
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemNotificationCountModel'
+  '/api/v3/notifications/{id}':
+    get:
+      tags:
+        - Notification
+      summary: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemNotificationContentModel'
+        '404':
+          description: Not Found
+  /api/v3/notifications/init:
+    get:
+      tags:
+        - Notification
+      summary: ''
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemNotificationContentModel'
+        '204':
+          description: Success
+  /api/v3/notifications/read/all:
+    post:
+      tags:
+        - Notification
+      summary: ''
+      responses:
+        '202':
+          description: Success
+  /api/v3/notifications/read:
+    post:
+      tags:
+        - Notification
+      summary: ''
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/SystemNotificationReadModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemNotificationReadModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SystemNotificationReadModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SystemNotificationReadModel'
+      responses:
+        '202':
+          description: Success
+        '400':
+          description: Bad Request
+  /api/v3/notifications/modules:
+    get:
+      tags:
+        - Notification
+      summary: ''
+      responses:
+        '200':
+          description: Success
+  /api/v3/notifications/announcement:
+    get:
+      tags:
+        - Notification
+      parameters:
+        - name: pageIndex
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            format: int32
+        - name: showType
+          in: query
+          schema:
+            $ref: '#/components/schemas/NotificationShowType'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnouncementModelIPagedList'
+  '/api/v3/notifications/announcement/{slug}':
+    get:
+      tags:
+        - Notification
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnouncementDetailModelIPagedList'
+  /api/v3/remainder:
+    get:
+      tags:
+        - Remainder
+      summary: ''
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+    post:
+      tags:
+        - Remainder
+      summary: ''
+      parameters:
+        - name: currencyId
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+  /api/v3/report:
+    get:
+      tags:
+        - Report
+      summary: ''
+      responses:
+        '200':
+          description: Success
+        '202':
+          description: Success
+        '400':
+          description: Bad Request
+  /api/v3/report/deposit-and-withdrawal:
+    post:
+      tags:
+        - Report
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ReportDepositWithdrawalInputModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportDepositWithdrawalInputModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ReportDepositWithdrawalInputModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ReportDepositWithdrawalInputModel'
+      responses:
+        '200':
+          description: Success
+        '202':
+          description: Success
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
+  /api/v3/report/transaction-history:
+    post:
+      tags:
+        - Report
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ReportTransactionHistoryInputModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportTransactionHistoryInputModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ReportTransactionHistoryInputModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ReportTransactionHistoryInputModel'
+      responses:
+        '200':
+          description: Success
+        '202':
+          description: Success
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
+  /api/v3/report/trade-history:
+    post:
+      tags:
+        - Report
+      summary: ''
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ReportTradeHistoryInputModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportTradeHistoryInputModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ReportTradeHistoryInputModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ReportTradeHistoryInputModel'
+      responses:
+        '200':
+          description: Success
+        '202':
+          description: Success
+        '400':
+          description: Bad Request
+        '409':
+          description: Conflict
+  /api/v3/support-platforms:
+    get:
+      tags:
+        - SupportPlatforms
+      summary: ''
+      responses:
+        '200':
+          description: Success
+  '/api/v3/support-platforms/zendesk/mobile-jwt/{platform}':
+    post:
+      tags:
+        - SupportPlatforms
+      summary: ''
+      parameters:
+        - name: platform
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_token:
+                  type: string
+            encoding:
+              user_token:
+                style: form
+      responses:
+        '200':
+          description: Success
+  '/api/v3/support-platforms/zendesk/chat-jwt/{platform}':
+    get:
+      tags:
+        - SupportPlatforms
+      parameters:
+        - name: platform
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  /api/v3/support-platforms/zendesk/sessions:
+    post:
+      tags:
+        - SupportPlatforms
+      responses:
+        '200':
+          description: Success
+  '/api/v3/UserAgreement/{slug}':
+    get:
+      tags:
+        - UserAgreement
+      summary: ''
+      parameters:
+        - name: slug
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAgreementModel'
+  '/api/v3/user-agreement/{slug}':
+    get:
+      tags:
+        - UserAgreement
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAgreementModel'
+    post:
+      tags:
+        - UserAgreement
+      summary: ''
+      parameters:
+        - name: slug
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '201':
+          description: Success
+        '500':
+          description: Server Error
+  /api/v3/UserAgreement:
+    get:
+      tags:
+        - UserAgreement
+      summary: ''
+      responses:
+        '403':
+          description: Forbidden
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserAgreementModel'
+    post:
+      tags:
+        - UserAgreement
+      summary: ''
+      requestBody:
+        description: Approve id
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/UserAgreementApproveModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAgreementApproveModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UserAgreementApproveModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserAgreementApproveModel'
+      responses:
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '201':
+          description: Success
+        '500':
+          description: Server Error
+  '/api/v3/user-agreement/risk-disclosure/pair/{pairSymbol}':
+    get:
+      tags:
+        - UserAgreement
+      summary: ''
+      parameters:
+        - name: pairSymbol
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckPairRiskAgreementResponseModel'
+        '500':
+          description: Server Error
+  '/api/v3/user-agreement/risk-disclosure/currency/{symbol}':
+    get:
+      tags:
+        - UserAgreement
+      summary: ''
+      parameters:
+        - name: symbol
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: transferType
+          in: query
+          description: ''
+          schema:
+            $ref: '#/components/schemas/CurrencyTransferType'
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckCurrencyRiskAgreementResponseModel'
+        '500':
+          description: Server Error
+  /api/v3/user-devices:
+    get:
+      tags:
+        - UserDevice
+      summary: Cihaz listesi
+      responses:
+        '200':
+          description: Success
+  '/api/v3/user-devices/{deviceId}':
+    delete:
+      tags:
+        - UserDevice
+      summary: ''
+      parameters:
+        - name: deviceId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Success
+        '404':
+          description: Not Found
+  /api/v3/user-donation:
+    get:
+      tags:
+        - UserDonation
+      summary: Bağış durumu
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+        - UserDonation
+      summary: Yeni bağış kaydı
+      requestBody:
+        description: ''
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/UserDonationRequestModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDonationRequestModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UserDonationRequestModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserDonationRequestModel'
+      responses:
+        '201':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestResponseModel'
+  /api/v3/user-donation/banks:
+    get:
+      tags:
+        - UserDonation
+      summary: Bağış kampanyasına ait kullanılabilir bankalar
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    AccountAddressModel:
+      type: object
+      properties:
+        countryId:
+          type: integer
+          format: int32
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        town:
+          type: string
+          nullable: true
+        district:
+          type: string
+          nullable: true
+        countryName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AkbankDirektCommissionOutputModel:
+      type: object
+      properties:
+        depositFee:
+          type: number
+          format: double
+        depositMaxFee:
+          type: integer
+          format: int32
+        depositTax:
+          type: number
+          format: double
+        depositMinAmount:
+          type: number
+          format: double
+      additionalProperties: false
+    AkbankDirektLimit:
+      type: object
+      properties:
+        maxDepositFeeAmount:
+          type: number
+          format: double
+        minDepositAmount:
+          type: number
+          format: double
+        maxDepositAmount:
+          type: number
+          format: double
+      additionalProperties: false
+    AlarmInterval:
+      enum:
+        - none
+        - hour
+        - hour6
+        - hour12
+        - day
+      type: integer
+      format: int32
+    AlarmTypes:
+      enum:
+        - price
+        - percentage
+        - nominal
+        - volume
+      type: integer
+      format: int32
+    AlarmVector:
+      enum:
+        - below
+        - above
+      type: integer
+      format: int32
+    AnnouncementDetailModel:
+      type: object
+      properties:
+        content:
+          type: string
+          nullable: true
+        metaTitle:
+          type: string
+          nullable: true
+        metaDescription:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        seoUrl:
+          type: string
+          nullable: true
+        releaseDate:
+          type: integer
+          format: int64
+      additionalProperties: false
+    AnnouncementDetailModelIPagedList:
+      type: object
+      properties:
+        indexFrom:
+          type: integer
+          format: int32
+          readOnly: true
+        pageIndex:
+          type: integer
+          format: int32
+          readOnly: true
+        pageSize:
+          type: integer
+          format: int32
+          readOnly: true
+        totalCount:
+          type: integer
+          format: int32
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnnouncementDetailModel'
+          nullable: true
+          readOnly: true
+        hasPreviousPage:
+          type: boolean
+          readOnly: true
+        hasNextPage:
+          type: boolean
+          readOnly: true
+      additionalProperties: false
+    AnnouncementModel:
+      type: object
+      properties:
+        title:
+          type: string
+          nullable: true
+        seoUrl:
+          type: string
+          nullable: true
+        releaseDate:
+          type: integer
+          format: int64
+      additionalProperties: false
+    AnnouncementModelIPagedList:
+      type: object
+      properties:
+        indexFrom:
+          type: integer
+          format: int32
+          readOnly: true
+        pageIndex:
+          type: integer
+          format: int32
+          readOnly: true
+        pageSize:
+          type: integer
+          format: int32
+          readOnly: true
+        totalCount:
+          type: integer
+          format: int32
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnnouncementModel'
+          nullable: true
+          readOnly: true
+        hasPreviousPage:
+          type: boolean
+          readOnly: true
+        hasNextPage:
+          type: boolean
+          readOnly: true
+      additionalProperties: false
+    AppRatingEnum:
+      enum:
+        - closed
+        - like
+        - unlike
+      type: integer
+      format: int32
+    AppRatingRequestModel:
+      type: object
+      properties:
+        rate:
+          $ref: '#/components/schemas/AppRatingEnum'
+      additionalProperties: false
+    BadRequestErrorModel:
+      type: object
+      properties:
+        field:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BadRequestResponseModel:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BadRequestErrorModel'
+          nullable: true
+      additionalProperties: false
+    BankCommissionOutputModel:
+      type: object
+      properties:
+        depositFee:
+          type: number
+          format: double
+        withdrawalFee:
+          type: number
+          format: double
+        depositTax:
+          type: number
+          format: double
+        withdrawalTax:
+          type: number
+          format: double
+        currency:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BankLimit:
+      type: object
+      properties:
+        minDepositAmount:
+          type: number
+          format: double
+        minWithdrawalAmounts:
+          type: number
+          format: double
+      additionalProperties: false
+    BugBountyNoticeRequestModel:
+      required:
+        - description
+        - diagnosis
+        - email
+        - firstName
+        - lastName
+      type: object
+      properties:
+        firstName:
+          maxLength: 256
+          type: string
+        lastName:
+          maxLength: 256
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          format: tel
+          nullable: true
+        userEmail:
+          type: string
+          format: email
+          nullable: true
+        diagnosis:
+          maxLength: 256
+          type: string
+        host:
+          type: string
+          nullable: true
+        path:
+          type: string
+          nullable: true
+        description:
+          maxLength: 2147483647
+          type: string
+        hCaptchaResponse:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CardRegistrationRequestViewModel:
+      required:
+        - address
+        - addressName
+        - cityId
+        - districtId
+      type: object
+      properties:
+        addressName:
+          type: string
+        address:
+          type: string
+        cityId:
+          type: integer
+          format: int64
+        districtId:
+          type: integer
+          format: int64
+      additionalProperties: false
+    CheckCurrencyRiskAgreementResponseModel:
+      type: object
+      properties:
+        slug:
+          type: string
+          nullable: true
+        required:
+          type: string
+          nullable: true
+        approved:
+          type: boolean
+      additionalProperties: false
+    CheckPairRiskAgreementResponseModel:
+      type: object
+      properties:
+        slug:
+          type: string
+          nullable: true
+        required:
+          type: string
+          nullable: true
+        approved:
+          type: boolean
+      additionalProperties: false
+    CommissionOutputModel:
+      type: object
+      properties:
+        paparaCommissions:
+          $ref: '#/components/schemas/PaparaCommissionOutputModel'
+        akbankDirektCommissions:
+          $ref: '#/components/schemas/AkbankDirektCommissionOutputModel'
+        bankCommissions:
+          $ref: '#/components/schemas/BankCommissionOutputModel'
+        bankCommissionList:
+          type: array
+          items:
+            $ref: '#/components/schemas/BankCommissionOutputModel'
+          nullable: true
+        cryptoCommissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CryptoCommissionOutputModel'
+          nullable: true
+      additionalProperties: false
+    CommissionType:
+      enum:
+        - unknown
+        - rate
+        - fixed
+      type: integer
+      format: int32
+    CreateAlarmRequest:
+      type: object
+      properties:
+        pair:
+          type: string
+          nullable: true
+        triggerValue:
+          type: number
+          format: double
+        alarmType:
+          $ref: '#/components/schemas/AlarmTypes'
+        vector:
+          $ref: '#/components/schemas/AlarmVector'
+        interval:
+          $ref: '#/components/schemas/AlarmInterval'
+        repeatInterval:
+          type: integer
+          format: int32
+        repeatMax:
+          type: integer
+          format: int32
+        smsAlert:
+          type: boolean
+        emailAlert:
+          type: boolean
+        pushNotificationAlert:
+          type: boolean
+      additionalProperties: false
+    CreateSplashScreenLoginRequestModel:
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/SplashScreenLoginType'
+      additionalProperties: false
+    CryptoCommissionOutputModel:
+      type: object
+      properties:
+        currencySymbol:
+          type: string
+          nullable: true
+        deposit:
+          type: number
+          format: double
+        withdrawal:
+          type: number
+          format: double
+      additionalProperties: false
+    CryptoCurrencySymbol:
+      enum:
+        - btc
+        - eth
+        - xrp
+        - ltc
+        - usdt
+        - xlm
+        - neo
+        - eos
+        - dash
+        - link
+        - atom
+        - xtz
+        - trx
+        - ada
+        - dot
+        - usdc
+        - uni
+        - chz
+        - ankr
+        - mkr
+        - enj
+        - omg
+        - comp
+        - grt
+        - mana
+        - matic
+        - snx
+        - bat
+        - avax
+        - fil
+        - doge
+        - shib
+        - sol
+        - stx
+        - axs
+        - ftm
+        - lrc
+        - uma
+        - sgb
+        - poly
+        - nu
+        - fet
+        - storj
+        - aave
+        - gala
+        - sand
+        - amp
+        - audio
+        - spell
+        - lunc
+        - algo
+        - ape
+        - bnt
+        - crv
+        - qnt
+        - skl
+        - glm
+        - luna
+        - lBtc
+        - lUsdt
+        - trc20Usdt
+        - arc20Usdt
+      type: integer
+      format: int32
+    CryptoWithdrawalCommissionsResponseModel:
+      type: object
+      properties:
+        currencyName:
+          type: string
+          nullable: true
+        currencySymbol:
+          type: string
+          nullable: true
+        order:
+          type: integer
+          format: int32
+        withdrawalCommissionsModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/WithdrawalCommissionsModel'
+          nullable: true
+      additionalProperties: false
+    CryptoWithdrawalDeleteInputModel:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CryptoWithdrawValidationResponseModel:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: true
+        asset:
+          type: string
+          nullable: true
+        address:
+          type: string
+          nullable: true
+        amount:
+          type: string
+          nullable: true
+        fee:
+          type: string
+          nullable: true
+        symbol:
+          type: string
+          nullable: true
+        date:
+          type: integer
+          format: int64
+          nullable: true
+        precision:
+          type: integer
+          format: int32
+        confirmRequired:
+          type: boolean
+      additionalProperties: false
+    CurrencyLimit:
+      type: object
+      properties:
+        symbol:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        minDeposit:
+          type: number
+          format: double
+        minWithdrawal:
+          type: number
+          format: double
+        levelLimits:
+          $ref: '#/components/schemas/LevelLimits'
+        type:
+          $ref: '#/components/schemas/CurrencyType'
+        order:
+          type: integer
+          format: int32
+      additionalProperties: false
+    CurrencyTransferType:
+      enum:
+        - all
+        - deposit
+        - withdrawal
+      type: integer
+      format: int32
+    CurrencyType:
+      enum:
+        - fiat
+        - crypto
+      type: integer
+      format: int32
+    DocumentFileType:
+      enum:
+        - csv
+        - excel
+        - pdf
+      type: integer
+      format: int32
+    FiatDepositBankAccountModel:
+      type: object
+      properties:
+        slug:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        statusTransfer:
+          type: boolean
+        statusAcceptEFT:
+          type: boolean
+        iban:
+          type: string
+          nullable: true
+        owner:
+          type: string
+          nullable: true
+        darkLogo:
+          type: string
+          nullable: true
+        lightLogo:
+          type: string
+          nullable: true
+        currencySymbol:
+          type: string
+          nullable: true
+      additionalProperties: false
+    HallOfFrameResponseModel:
+      type: object
+      properties:
+        order:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    JumioKycIdentityVerificationRequestModel:
+      type: object
+      properties:
+        errorUrl:
+          type: string
+          nullable: true
+        successUrl:
+          type: string
+          nullable: true
+        isProviderFlowDrivenByClient:
+          type: boolean
+      additionalProperties: false
+    LanguageInfoModel:
+      type: object
+      properties:
+        languageCulture:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LanguageSettingModel:
+      type: object
+      properties:
+        languageList:
+          type: array
+          items:
+            $ref: '#/components/schemas/LanguageInfoModel'
+          nullable: true
+      additionalProperties: false
+    LevelLimits:
+      type: object
+      properties:
+        level1Limits:
+          $ref: '#/components/schemas/LevelLimitValues'
+        level2Limits:
+          $ref: '#/components/schemas/LevelLimitValues'
+        basicVerifiedLimits:
+          $ref: '#/components/schemas/LevelLimitValues'
+        basicLimits:
+          $ref: '#/components/schemas/LevelLimitValues'
+      additionalProperties: false
+    LevelLimitValues:
+      type: object
+      properties:
+        depositLimit24Hours:
+          type: number
+          format: double
+          nullable: true
+        depositLimit24HoursType:
+          $ref: '#/components/schemas/LimitType'
+        depositLimit30Days:
+          type: number
+          format: double
+          nullable: true
+        depositLimit30DaysType:
+          $ref: '#/components/schemas/LimitType'
+        withdrawalLimit24Hours:
+          type: number
+          format: double
+          nullable: true
+        withdrawalLimit24HoursType:
+          $ref: '#/components/schemas/LimitType'
+        withdrawalLimit30Days:
+          type: number
+          format: double
+          nullable: true
+        withdrawalLimit30DaysType:
+          $ref: '#/components/schemas/LimitType'
+      additionalProperties: false
+    LimitOutputModel:
+      type: object
+      properties:
+        papara:
+          $ref: '#/components/schemas/PaparaLimit'
+        akbankDirekt:
+          $ref: '#/components/schemas/AkbankDirektLimit'
+        bank:
+          $ref: '#/components/schemas/BankLimit'
+        currencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrencyLimit'
+          nullable: true
+        pairs:
+          type: array
+          items:
+            $ref: '#/components/schemas/PairLimit'
+          nullable: true
+        countryCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    LimitType:
+      enum:
+        - limited
+        - unLimited
+        - noWithdrawal
+        - noDeposit
+      type: integer
+      format: int32
+    MobileSettingModel:
+      type: object
+      properties:
+        languageSettings:
+          $ref: '#/components/schemas/LanguageSettingModel'
+        rating:
+          type: boolean
+        euroIsEnable:
+          type: boolean
+        countryCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+    NotificationShowType:
+      enum:
+        - all
+        - local
+        - global
+      type: integer
+      format: int32
+    OrderMethod:
+      enum:
+        - limit
+        - market
+        - stopLimit
+        - stopMarket
+      type: integer
+      format: int32
+    PairLimit:
+      type: object
+      properties:
+        numerator:
+          type: string
+          nullable: true
+        denominator:
+          type: string
+          nullable: true
+        minExchangeValue:
+          type: number
+          format: double
+      additionalProperties: false
+    PaparaCommissionOutputModel:
+      type: object
+      properties:
+        depositFee:
+          type: number
+          format: double
+        depositMaxFee:
+          type: integer
+          format: int32
+        depositTax:
+          type: number
+          format: double
+        withdrawalFee:
+          type: number
+          format: double
+        withdrawalMaxFee:
+          type: integer
+          format: int32
+        withdrawalTax:
+          type: number
+          format: double
+        minimumWithdrawalPerTransaction:
+          type: number
+          format: double
+      additionalProperties: false
+    PaparaLimit:
+      type: object
+      properties:
+        maxDepositFeeAmount:
+          type: number
+          format: double
+        minDepositAmount:
+          type: number
+          format: double
+        maxDepositAmount:
+          type: number
+          format: double
+        minWithdrawalAmounts:
+          type: number
+          format: double
+        maxWithdrawalFeeAmount:
+          type: number
+          format: double
+        minWithdrawalPerTransaction:
+          type: number
+          format: double
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }
+    ReportDepositWithdrawalInputModel:
+      type: object
+      properties:
+        types:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        currencies:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        beginDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        documentFileType:
+          $ref: '#/components/schemas/DocumentFileType'
+      additionalProperties: false
+    ReportTradeHistoryInputModel:
+      type: object
+      properties:
+        pairs:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        orderTypes:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        beginDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        documentFileType:
+          $ref: '#/components/schemas/DocumentFileType'
+      additionalProperties: false
+    ReportTransactionHistoryInputModel:
+      type: object
+      properties:
+        types:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        currencies:
+          type: array
+          items:
+            type: integer
+            format: int32
+          nullable: true
+        beginDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        documentFileType:
+          $ref: '#/components/schemas/DocumentFileType'
+      additionalProperties: false
+    ReturnCodeType:
+      enum:
+        - success
+        - invalidModel
+        - internalError
+        - registrationError
+        - userAlreadyExists
+        - lockedOut
+        - requiresTwoFactor
+        - notAllowed
+        - loginFailed
+        - emailNotConfirmed
+        - idNumberFound
+        - duplicateIdNumber
+        - wrongIdNumber
+        - userInformationNotCorrect
+        - userAgeIsLessThanEighteen
+        - userBirthdayIsNotCorrect
+        - errorOldPasswordNotSameNew
+        - errorOldPasswordInvalid
+        - errorEmailCouldNotSend
+        - userStatusFrozen
+        - userNotFound
+        - failedNewAndConfirmedNotSame
+        - failedPasswordCouldNotBeChanged
+        - failedTokenExpired
+        - userMobileDailySmsLimitIsFull
+        - failedWrongCode
+        - auditLogsNotFound
+        - pairNotFound
+        - tickerNotFound
+        - bankNotFound
+        - invalidIban
+        - userBankSuccessfullyAdded
+        - userBankAddedError
+        - userBankSuccessfullyDeleted
+        - userBankDeletedError
+        - userBankSuccessfullyUpdated
+        - userBankUpdatedError
+        - userBankNotFound
+        - invalidRequest
+        - userAlreadyVerified
+        - userUnverified
+        - userShouldPassPreviousVerificationStep
+        - fileCouldNotUpload
+        - fileInvalid
+        - fileSuccessfullyAdded
+        - fileSuccessfullyDeleted
+        - fileCouldNotFound
+        - pendingForVerification
+        - failedExistSameFileType
+        - failedUserDoesNotHaveFile
+        - failedDocumentsCanNotBeDeleteAfterVerification
+        - orderCouldNotBeCanceled
+        - noOrderMatchesYourRequest
+        - amountCannotBeLessThanFee
+        - amountCannotBeSameBalanceAmount
+        - balanceNotEnough
+        - exceeded30DaysLimit
+        - exceeded24HourLimit
+        - currencySymbolsNotEqual
+        - existPendingRequest
+        - cannotFoundPendingRequest
+        - userBalanceProblem
+        - authenticationAlreadyUsing
+        - authChangeHashModelError
+        - currencyNotFound
+        - currencyForkUpdate
+        - amountBelowMinimumDeposit
+        - amountBelowMaximumDeposit
+        - amountBelowMinimumWithdrawal
+        - amountExceededMaximumWithdrawal
+        - none
+        - fileHasHugeSize
+        - noPendingDeposit
+        - noPendingWithdrawal
+        - errorEmailCanNotSend
+        - errorSmsCanNotSend
+        - cryptoAddressGeneratorError
+        - mobilePhoneIsNotCorrect
+        - authenticationTypeShouldBeSet
+        - pairSymbolNecessary
+        - failedSendToService
+        - timeout
+        - undefined
+        - receiverAddressCouldNotRemoved
+        - receiverAddressNotFound
+        - receiverAddressLimitReached
+        - receiverAddressAlreadyExist
+        - addressCouldNotAdded
+        - addressIsNotValid
+        - addressCanNotBeInternal
+        - authenticationTypeDifferent
+        - invalidCaptchaTokenRequest
+        - emailAlreadyExists
+        - idNumberIsNull
+        - errorDateRangeMax3Month
+        - otpNotValid
+        - phishingCodeNotUpdated
+        - phishingCodeNotValid
+        - pinCodeNotValid
+        - pinCodeNotFound
+        - pinCodeFound
+        - pinCodeAccessException
+        - pinCodeAlreadyExists
+        - pinCodeAlreadyPassive
+        - pinCodeOnlyNumber
+        - pinCodeRequired
+        - pinCodeTryLimitExceeded
+        - ibanExists
+        - requestValidationFailed
+        - priceMustBeAnInteger
+        - failedSetOrderUnexpected
+        - failedMarketOrder
+        - firstCryptoWithdrawalInvalid
+        - failedLimitOrder
+        - failedOrderParameter
+        - failedOrderWithOpenOrders
+        - failedMinTotalAmount
+        - failedStopPriceGreaterThanBestAsk
+        - failedStopPriceLessThanBestBid
+        - invalidPriceScale
+        - invalidQuantityScale
+        - invalidStopPriceScale
+        - invalidTradeViewSymbol
+        - invalidParameter
+        - invalidOldAndNewPriceSame
+        - appMustBeUpdated
+        - appShouldBeUpdated
+        - orderMethodNotSupported
+        - valueBelowMinimum
+        - valueAboveMaximum
+        - korderInsertError
+        - apiAccessDeleteError
+        - apiAccessUpdateError
+        - cryptoAddressIsValid
+        - failedLastCryptoAddressNotUsed
+        - depositAlreadyConfirmed
+        - phishingCodeAlreadyExist
+        - registeredCardLimitExceeded
+        - invalidCardType
+        - cardBrandForbidden
+        - cardAlreadyRegistered
+        - paymentAlreadyExists
+        - monthlyPaymentLimitExceeded
+        - cardStatusException
+        - cardNotFound
+        - orderNotFound
+        - paymentProviderException
+        - paparaDepositIsPending
+        - paparaDepositNotExists
+        - paparaDepositTransferWaitingToBtc
+        - paparaError
+        - paparaGeneralError
+        - paparaUserNotFound
+        - paparaWithdrawalError
+        - paparaWithdrawalErrorShowUser
+        - paparaWrongWalletId
+        - paparaAccountNotVerified
+        - paparaUserBalanceError
+        - paparaDuplicatePaymentError
+        - paparaUserAccountBlocked
+        - paparaUserAccountNotActive
+        - paparaUserIdentityNumberNotMatched
+        - paparaLessThanMinimumAmount
+        - alaramLimitExceeded
+        - duplicateAlarm
+        - couponCodeInvalid
+        - couponCodeExpired
+        - couponCodeExhausted
+        - couponCodeHasAlreadyBeenUsed
+        - publicCouponCodeUsageLimitHasExpired
+        - canBenefitOnceFromThisCampaign
+        - assetCouponApplied
+        - assetCouponCouldNotApplied
+        - couponCodeCannotBeRedeemedBeforeActivationDate
+        - couponOnlyAvailableOnAllProPlatforms
+        - couponOnlyAvailableOnWeb
+        - couponOnlyAvailableOnMobileApp
+        - couponOnlyAvailableOnApiV1
+        - couponOnlyAvailableOnAllBtcTurkPlatforms
+        - couponOnlyAvailableOnBtcTurkWeb
+        - couponOnlyAvailableOnBtcTurkMobileApp
+        - couponActivatedSuccessfully
+        - topup3dOperationFailed
+        - paparaWithdrawalDublicateRequest
+        - cardValidationFailed
+        - userStatusNotValid
+        - orderTypeNotSupported
+        - pinPreviousNotAllowed
+        - paparaWithdrawalProcessSuccess
+        - failedCryptoWithdrawalExpired
+        - marketingApprovalStatusError
+        - paymentNotFound
+        - pinCodeLocked
+        - userHasNoDevice
+        - failedSendNotification
+        - noPushNotificationPermission
+        - userDeviceNotFound
+        - authenticatorIsNotValid
+        - otpCodeAttemptLimitExceeded
+        - invalidDevice
+        - authCodeSmsExpired
+        - authCodeTFAExpired
+        - startDateEndDateInvalid
+        - walletCodeNewMustBeDifferent
+        - basicUserCryptoWithdrawalExceeded30DaysLimit
+        - basicUserCryptoWithdrawalExceeded24HourLimit
+        - addressAlreadyConfirmed
+        - errorDateRangeMax30Days
+        - startDateCannotBeGreaterThanEndDate
+        - userActivitiesInvalidDate
+        - systemUnderMaintenance
+        - accessDenied
+        - akbankDirektError
+        - akbankDirektGeneralError
+        - akbankDirektDepositSuccess
+        - akbankDirektDepositCancelledByUser
+        - akbankDirektDepositTransferNotCompleted
+        - akbankDirektDepositTransferWaitingToBtc
+        - akbankDirektDepositTransferTransactionIdNotMatch
+        - akbankDirektDepositRequestRejecteByProvider
+        - priceMustBeLessThanMaxPrice
+        - priceMustBeLessThanMinPrice
+        - blockedCryptoWithdrawal
+        - blockedTryWithdrawal
+        - btcTurkIbanError
+        - currencyWithdrawalDisabled
+        - currencyDepositDisabled
+        - cardRegistrationAlreadyExistARequest
+        - cardRegistrationCityInfoInvalid
+        - sellRemainder24HoursLimit
+        - sellRemainderBalanceNotAvailable
+        - sellRemainderAmountLimit
+        - pendingConfirmWithdrawalRequestError
+        - suspendedWithdrawCrypto
+        - suspendedWithdrawTry
+        - balanceNotEnoughDueToOpenOrders
+        - incorrectPassword
+        - orderCancelledButInsertFailed
+        - maximumOrderAmountExceeded
+        - orderMaximumPriceExeeded
+        - orderMinimumPriceExeeded
+        - orderInsertBlocked
+        - orderCancelBlocked
+        - orderEditBlocked
+        - convertBlocked
+        - suspiciousAddress
+        - dbError
+      type: integer
+      format: int32
+    ReturnModel:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+          nullable: true
+        code:
+          $ref: '#/components/schemas/ReturnCodeType'
+      additionalProperties: false
+    SplashScreenLoginType:
+      enum:
+        - unknown
+        - pin
+        - biometric
+      type: integer
+      format: int32
+    SystemNotificationContentModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        subtitle:
+          type: string
+          nullable: true
+        activity:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        createdDate:
+          type: integer
+          format: int64
+        pin:
+          type: boolean
+        content:
+          type: string
+          nullable: true
+        read:
+          type: boolean
+      additionalProperties: false
+    SystemNotificationCountModel:
+      type: object
+      properties:
+        t:
+          type: string
+          nullable: true
+        c:
+          type: integer
+          format: int32
+        r:
+          type: boolean
+          nullable: true
+      additionalProperties: false
+    SystemNotificationModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        subtitle:
+          type: string
+          nullable: true
+        activity:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        createdDate:
+          type: integer
+          format: int64
+        pin:
+          type: boolean
+        read:
+          type: boolean
+      additionalProperties: false
+    SystemNotificationModelIPagedList:
+      type: object
+      properties:
+        indexFrom:
+          type: integer
+          format: int32
+          readOnly: true
+        pageIndex:
+          type: integer
+          format: int32
+          readOnly: true
+        pageSize:
+          type: integer
+          format: int32
+          readOnly: true
+        totalCount:
+          type: integer
+          format: int32
+          readOnly: true
+        totalPages:
+          type: integer
+          format: int32
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemNotificationModel'
+          nullable: true
+          readOnly: true
+        hasPreviousPage:
+          type: boolean
+          readOnly: true
+        hasNextPage:
+          type: boolean
+          readOnly: true
+      additionalProperties: false
+    SystemNotificationReadModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+      additionalProperties: false
+    SystemNotificationRequestType:
+      enum:
+        - all
+        - notification
+        - announcement
+      type: integer
+      format: int32
+    UserAgreementApproveModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+      additionalProperties: false
+    UserAgreementModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          nullable: true
+        body:
+          type: string
+          nullable: true
+        language:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        version:
+          type: integer
+          format: int32
+        required:
+          type: string
+          nullable: true
+      additionalProperties: false
+    UserAllLimitsModel:
+      type: object
+      properties:
+        currencySymbol:
+          type: string
+          nullable: true
+        depositLimit24Hours:
+          type: number
+          format: double
+        depositLimit30Days:
+          type: number
+          format: double
+        withdrawalLimit24Hours:
+          type: number
+          format: double
+        withdrawalLimit30Days:
+          type: number
+          format: double
+        calculate:
+          type: boolean
+        remaining24HoursDeposit:
+          type: number
+          format: double
+        remaining30DaysDeposit:
+          type: number
+          format: double
+        remaining24HoursWithdrawal:
+          type: number
+          format: double
+        remaining30DaysWithdrawal:
+          type: number
+          format: double
+      additionalProperties: false
+    UserDonationRequestModel:
+      required:
+        - amount
+        - bankId
+      type: object
+      properties:
+        amount:
+          pattern: '^\d{0,12}(\.\d{1,16})?$'
+          type: string
+        bankId:
+          type: integer
+          format: int32
+      additionalProperties: false
+    UserTradeFeeRateErrorModel:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/ReturnCodeType'
+      additionalProperties: false
+    UserTradeFeeRateOutputModel:
+      type: object
+      properties:
+        pairId:
+          type: integer
+          format: int64
+        pairSymbol:
+          type: string
+          nullable: true
+        orderMethod:
+          $ref: '#/components/schemas/OrderMethod'
+        makerFeePercentage:
+          type: number
+          format: double
+        takerFeePercentage:
+          type: number
+          format: double
+        taxPercentage:
+          type: number
+          format: double
+        hasActiveCoupon:
+          type: boolean
+      additionalProperties: false
+    WithdrawalCommissionsModel:
+      type: object
+      properties:
+        cryptoChannelName:
+          type: string
+          nullable: true
+        commissionType:
+          $ref: '#/components/schemas/CommissionType'
+        currencyPrecision:
+          type: integer
+          format: int32
+        feeValue:
+          type: number
+          format: double
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: 'JWT Authorization header using the Bearer scheme. Example: "Authorization: Bearer {token}"'
+      name: Authorization
+      in: header
+security:
+  - Bearer: [ ]
